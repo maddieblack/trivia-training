@@ -1,12 +1,12 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import "./styles/global.css"
+import Home from "./pages/Home"
 import reportWebVitals from "./utils/reportWebVitals"
-import Root from "./Root"
 
 ReactDOM.render(
   <React.StrictMode>
-    <Root />
+    <Home />
   </React.StrictMode>,
   document.getElementById("root")
 )
