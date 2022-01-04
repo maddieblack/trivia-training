@@ -1,6 +1,25 @@
+import React, { useEffect, useState } from "react"
+import { ApiUtils } from "../../utils/api"
+
 import "./Home.css"
 
 function Home() {
+  const [questions, setQuestions] = useState({})
+
+  useEffect(() => {
+    _handleNewRandomQuestion()
+  }, [])
+
+  const _handleNewRandomQuestion = () =>
+    ApiUtils.fetchRandomTrivia().then((question) =>
+      setQuestions({
+        ...questions,
+        [question.id]: { ...question, index: Object.values(questions).length },
+      })
+    )
+
+  console.log({ questions })
+
   return (
     <div className="App">
       <header className="App-header">
