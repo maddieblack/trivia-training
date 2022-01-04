@@ -1,24 +1,23 @@
 import React, { useEffect, useState } from "react"
 import { ApiUtils } from "../../utils/api"
+import keyBy from "lodash/keyBy"
 
 import "./Home.css"
 
 function Home() {
   const [questions, setQuestions] = useState({})
 
+  const questionDictionary = keyBy(questions, "id")
+
   useEffect(() => {
     _handleNewRandomQuestion()
   }, [])
 
   const _handleNewRandomQuestion = () =>
-    ApiUtils.fetchRandomTrivia().then((question) =>
-      setQuestions({
-        ...questions,
-        [question.id]: { ...question, index: Object.values(questions).length },
-      })
-    )
-
-  console.log({ questions })
+    ApiUtils.fetchRandomTrivia().then((question) => {
+      if (questionDictionary[question.id]) return _handleNewRandomQuestion()
+      return setQuestions([...questions, question])
+    })
 
   return (
     <div className="App">
